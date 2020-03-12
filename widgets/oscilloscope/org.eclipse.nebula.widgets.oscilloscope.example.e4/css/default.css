@@ -5,8 +5,8 @@ CSS for Oscilloscope
 Oscilloscope#one {
 	grid-square-size: 30px;
 	grid-background-color: #808080;
-	grid-color: #ffffcc;
-	grid-line-width: 3;
+	grid-color: #909090;
+	grid-line-width: 1;
 }
 
 

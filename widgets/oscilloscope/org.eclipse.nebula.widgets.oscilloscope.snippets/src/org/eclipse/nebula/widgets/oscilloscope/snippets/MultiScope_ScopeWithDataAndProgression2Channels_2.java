@@ -6,7 +6,7 @@
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- * 
+ *
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
@@ -61,6 +61,8 @@ public class MultiScope_ScopeWithDataAndProgression2Channels_2 {
 
 		// Create a single channel scope
 		final Oscilloscope scope = new Oscilloscope(2, shell, SWT.NONE);
+		scope.setTailSize(0, Oscilloscope.TAILSIZE_MAX);
+		scope.setTailSize(1, Oscilloscope.TAILSIZE_MAX);
 		scope.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
@@ -72,7 +74,10 @@ public class MultiScope_ScopeWithDataAndProgression2Channels_2 {
 		scope.addStackListener(0, getStackAdapter());
 		scope.addStackListener(1, getStackAdapter());
 
+		scope.getDispatcher(0).setDelayLoop(200);
+		scope.getDispatcher(1).setDelayLoop(200);
 		scope.getDispatcher(0).dispatch();
+		scope.getDispatcher(1).dispatch();
 
 	}
 

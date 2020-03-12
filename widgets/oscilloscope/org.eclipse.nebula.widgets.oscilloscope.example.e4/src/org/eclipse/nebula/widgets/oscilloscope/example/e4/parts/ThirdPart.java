@@ -22,6 +22,7 @@ import javax.annotation.PreDestroy;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.nebula.widgets.oscilloscope.multichannel.Oscilloscope;
+import org.eclipse.nebula.widgets.oscilloscope.multichannel.OscilloscopeDispatcher;
 import org.eclipse.nebula.widgets.oscilloscope.multichannel.OscilloscopeStackAdapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -36,18 +37,20 @@ public class ThirdPart {
 	public void createComposite(final Composite parent) {
 		parent.setLayout(new FillLayout());
 
-		// Create a single channel scope
-		scope = new Oscilloscope(2, parent, SWT.NONE);
+		// Create a double channel scope with one dispatcher
+
+		scope = new Oscilloscope(2, new OscilloscopeDispatcher(), parent, SWT.NONE);
 		scope.setData(CSS_ID, "three");
+		scope.setConnect(0, true);
+		scope.setTailSize(0, Oscilloscope.TAILSIZE_MAX);
 
 		scope.addListener(SWT.Resize, e -> {
-			scope.setProgression(0, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(1, ((Oscilloscope) e.widget).getSize().x);
+			scope.setProgression(0, scope.getSize().x);
+			scope.setProgression(1, scope.getSize().x);
 		});
 
 		final OscilloscopeStackAdapter stackAdapter = getStackAdapter();
 		scope.addStackListener(0, stackAdapter);
-		scope.addStackListener(1, stackAdapter);
 
 		scope.getDispatcher(0).dispatch();
 
@@ -63,49 +66,42 @@ public class ThirdPart {
 			public void stackEmpty(final Oscilloscope scope, final int channel) {
 				final Random random = new Random();
 
-				if (channel == 0) {
-
-					if (oldp != scope.getProgression(channel)) {
-						oldp = scope.getProgression(channel);
-						ints = new int[oldp];
-						for (int i = 0; i < ints.length - 8; i++) {
-							final int inti = 20 - random.nextInt(40);
-							ints[i++] = inti;
-							ints[i++] = inti;
-							ints[i++] = inti;
-							ints[i++] = inti;
-							ints[i++] = inti;
-							ints[i++] = inti;
-							ints[i++] = inti;
-							ints[i++] = inti;
-						}
-					} else {
-						for (int i = 0; i < ints.length - 8; i++) {
-							final int inti = 2 - random.nextInt(5);
-							ints[i] = ints[i++] + inti;
-							ints[i] = ints[i++] + inti;
-							ints[i] = ints[i++] + inti;
-							ints[i] = ints[i++] + inti;
-							ints[i] = ints[i++] + inti;
-							ints[i] = ints[i++] + inti;
-							ints[i] = ints[i++] + inti;
-							ints[i] = ints[i++] + inti;
-						}
-
+				if (oldp != scope.getProgression(channel)) {
+					oldp = scope.getProgression(channel);
+					ints = new int[oldp];
+					for (int i = 0; i < ints.length - 8; i++) {
+						final int inti = 20 - random.nextInt(40);
+						ints[i++] = inti;
+						ints[i++] = inti;
+						ints[i++] = inti;
+						ints[i++] = inti;
+						ints[i++] = inti;
+						ints[i++] = inti;
+						ints[i++] = inti;
+						ints[i++] = inti;
 					}
-					scope.setValues(channel, ints);
-				}
-
-				else {
-					final int[] onts = new int[ints.length];
-					for (int i = 0; i < ints.length; i++) {
-						onts[i] = -1 * ints[i];
+				} else {
+					for (int i = 0; i < ints.length - 8; i++) {
+						final int inti = 2 - random.nextInt(5);
+						ints[i] = ints[i++] + inti;
+						ints[i] = ints[i++] + inti;
+						ints[i] = ints[i++] + inti;
+						ints[i] = ints[i++] + inti;
+						ints[i] = ints[i++] + inti;
+						ints[i] = ints[i++] + inti;
+						ints[i] = ints[i++] + inti;
+						ints[i] = ints[i++] + inti;
 					}
-					scope.setValues(channel, onts);
 				}
+				scope.setValues(channel, ints);
+
+				final int[] onts = new int[ints.length];
+				for (int i = 0; i < ints.length; i++) {
+					onts[i] = -1 * ints[i];
+				}
+				scope.setValues(channel + 1, onts);
 			}
 		};
-
 	}
 
 	@Focus
@@ -116,6 +112,5 @@ public class ThirdPart {
 	@PreDestroy
 	private void dispose() {
 	}
-
 
 }

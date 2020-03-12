@@ -62,20 +62,14 @@ public class SecondPart {
 				return Oscilloscope.TAILSIZE_MAX;
 			}
 		};
+
 		scope = new Oscilloscope(10, dsp, parent, SWT.NONE);
 		scope.setData(CSS_ID, "two");
 
 		scope.addListener(SWT.Resize, e -> {
-			scope.setProgression(0, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(1, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(2, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(3, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(4, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(5, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(6, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(7, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(8, ((Oscilloscope) e.widget).getSize().x);
-			scope.setProgression(9, ((Oscilloscope) e.widget).getSize().x);
+			for (int i = 0; i < scope.getChannels(); i++) {
+				scope.setProgression(i, scope.getSize().x);
+			}
 		});
 
 		scope.addStackListener(0, getStackAdapter());

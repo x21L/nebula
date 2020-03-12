@@ -19,12 +19,15 @@
       <plugin id="com.ibm.icu"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
+      <plugin id="org.apache.batik.constants"/>
       <plugin id="org.apache.batik.css"/>
+      <plugin id="org.apache.batik.i18n"/>
       <plugin id="org.apache.batik.util"/>
-      <plugin id="org.apache.batik.util.gui"/>
+      <plugin id="org.apache.commons.io"/>
       <plugin id="org.apache.commons.jxpath"/>
       <plugin id="org.apache.commons.logging"/>
       <plugin id="org.apache.felix.scr"/>
+      <plugin id="org.apache.xmlgraphics"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
@@ -47,6 +50,7 @@
       <plugin id="org.eclipse.e4.ui.css.swt"/>
       <plugin id="org.eclipse.e4.ui.css.swt.theme"/>
       <plugin id="org.eclipse.e4.ui.di"/>
+      <plugin id="org.eclipse.e4.ui.dialogs"/>
       <plugin id="org.eclipse.e4.ui.model.workbench"/>
       <plugin id="org.eclipse.e4.ui.services"/>
       <plugin id="org.eclipse.e4.ui.swt.gtk" fragment="true"/>
@@ -70,6 +74,8 @@
       <plugin id="org.eclipse.equinox.registry"/>
       <plugin id="org.eclipse.jface"/>
       <plugin id="org.eclipse.jface.databinding"/>
+      <plugin id="org.eclipse.nebula.widgets.oscilloscope"/>
+      <plugin id="org.eclipse.nebula.widgets.oscilloscope.css"/>
       <plugin id="org.eclipse.nebula.widgets.oscilloscope.example.e4"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.compatibility.state" fragment="true"/>

@@ -6,7 +6,7 @@
  * are made available under the terms of the Eclipse Public License 2.0
  * which accompanies this distribution, and is available at
  * https://www.eclipse.org/legal/epl-2.0/
- * 
+ *
  * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
@@ -58,7 +58,6 @@ public class MultiScope_ScopeWithDataAndProgression2Channels_3 {
 		shell.setText("Nebula Oscilloscope");
 		shell.setLayout(new FillLayout());
 
-		// Create a single channel scope
 		final Oscilloscope scope = new Oscilloscope(4, shell, SWT.NONE);
 		scope.addListener(SWT.Resize, e -> {
 			scope.setProgression(0, ((Oscilloscope) e.widget).getSize().x);
@@ -70,8 +69,8 @@ public class MultiScope_ScopeWithDataAndProgression2Channels_3 {
 		OscilloscopeStackAdapter stackAdapter = getStackAdapter();
 		scope.addStackListener(0, stackAdapter);
 		scope.addStackListener(1, stackAdapter);
-		scope.addStackListener(2, stackAdapter);
-		scope.addStackListener(3, stackAdapter);
+		// scope.addStackListener(2, stackAdapter);
+		// scope.addStackListener(3, stackAdapter);
 
 		scope.setBaseOffset(0, 50);
 		scope.setBaseOffset(1, 50);
@@ -86,6 +85,16 @@ public class MultiScope_ScopeWithDataAndProgression2Channels_3 {
 
 			@Override
 			public void hookAfterDraw(Oscilloscope oscilloscope, int counter) {
+			}
+
+			@Override
+			public boolean isTailSizeMax() {
+				return true;
+			}
+
+			@Override
+			public boolean mustConnect() {
+				return true;
 			}
 
 			@Override

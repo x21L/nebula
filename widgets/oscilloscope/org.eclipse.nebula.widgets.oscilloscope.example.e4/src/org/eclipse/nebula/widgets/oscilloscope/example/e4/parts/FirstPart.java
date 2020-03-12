@@ -15,8 +15,6 @@
  ******************************************************************************/
 package org.eclipse.nebula.widgets.oscilloscope.example.e4.parts;
 
-import java.util.Random;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -38,33 +36,16 @@ public class FirstPart {
 
 		// Create a single channel scope
 		scope = new Oscilloscope(parent, SWT.NONE);
+		scope.setFade(0, false);
+		scope.setSteady(0, false, 500);
 		scope.setData(CSS_ID, "one");
-
-		scope.addListener(SWT.Resize, e -> scope.setProgression(0, ((Oscilloscope) e.widget).getSize().x));
+		int[] empty = new int[40];
 
 		scope.addStackListener(0, new OscilloscopeStackAdapter() {
-			private int oldp;
-			private int[] ints;
-
 			@Override
 			public void stackEmpty(final Oscilloscope scope, final int channel) {
-				final Random random = new Random();
-				if (oldp != scope.getProgression(0)) {
-					oldp = scope.getProgression(0);
-					ints = new int[oldp];
-					for (int i = 0; i < ints.length; i++) {
-						final int inti = 10 - random.nextInt(20);
-						ints[i++] = inti;
-					}
-				} else {
-					for (int i = 0; i < ints.length; i++) {
-						final int inti = 2 - random.nextInt(5);
-						ints[i] = ints[i++] + inti;
-					}
-
-				}
-
-				scope.setValues(0, ints);
+				scope.setValues(0, Oscilloscope.HEARTBEAT);
+				scope.setValues(0, empty);
 			}
 		});
 

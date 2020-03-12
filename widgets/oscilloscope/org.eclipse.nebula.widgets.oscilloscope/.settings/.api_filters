@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.nebula.widgets.oscilloscope" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.nebula.widgets.oscilloscope.multichannel.Plotter">
+        <filter comment="Unused class" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.nebula.widgets.oscilloscope.multichannel.Plotter"/>
+                <message_argument value="org.eclipse.nebula.widgets.oscilloscope_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/nebula/widgets/oscilloscope/multichannel/Oscilloscope.java" type="org.eclipse.nebula.widgets.oscilloscope.multichannel.Oscilloscope">
+        <filter comment="Unused implementation. Switched to ControlAdapater" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.nebula.widgets.oscilloscope.multichannel.Oscilloscope"/>
+                <message_argument value="controlMoved(ControlEvent)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

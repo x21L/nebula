@@ -1,5 +1,5 @@
 /*******************************************************************************
- *  Copyright (c) 2010, 2012 Weltevree Beheer BV, Remain Software & Industrial-TSI
+ *  Copyright (c) 2010 Weltevree Beheer BV, Remain Software & Industrial-TSI
  *
  *
  * This program and the accompanying materials
@@ -14,22 +14,18 @@
  ******************************************************************************/
 package org.eclipse.nebula.widgets.oscilloscope.snippets;
 
-import java.util.Random;
-
 import org.eclipse.nebula.widgets.oscilloscope.multichannel.Oscilloscope;
 import org.eclipse.nebula.widgets.oscilloscope.multichannel.OscilloscopeStackAdapter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * This snippet demonstrates how to run the dispatcher in simple mode.
+ * We add a stack listener to provide data when the scope runs out.
  *
  */
-public class MultiScope_ScopeWithDataAndProgression {
+public class MultiScope_SimpleScope2 {
 
 	protected static Shell shell;
 
@@ -43,7 +39,7 @@ public class MultiScope_ScopeWithDataAndProgression {
 		Display display = Display.getDefault();
 		createContents();
 		shell.open();
-		shell.layout();
+		shell.setSize(300, 300);
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -57,44 +53,28 @@ public class MultiScope_ScopeWithDataAndProgression {
 	protected static void createContents() {
 		shell = new Shell();
 		shell.setText("Nebula Oscilloscope");
-		shell.setLayout(new FillLayout());
+		shell.setLayout(new FillLayout(SWT.VERTICAL));
+		addScope(true, 10);
+	}
 
-		// Create a single channel scope
-		final Oscilloscope scope = new Oscilloscope(shell, SWT.NONE);
-		scope.setTailSize(0, Oscilloscope.TAILSIZE_MAX);
-		scope.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(ControlEvent e) {
-				scope.setProgression(0, ((Oscilloscope) e.widget).getSize().x);
-			}
-		});
+	private static void addScope(boolean antiAlias, int adder) {
+		Oscilloscope scope = new Oscilloscope(shell, SWT.NONE);
+		scope.setAntialias(0, antiAlias);
+
 		scope.addStackListener(0, new OscilloscopeStackAdapter() {
-			private int oldp;
-			private int[] ints;
+			int value = 0;
+			int add = adder;
 
 			@Override
 			public void stackEmpty(Oscilloscope scope, int channel) {
-				Random random = new Random();
-				if (oldp != scope.getProgression(0)) {
-					oldp = scope.getProgression(0);
-					ints = new int[oldp];
-					for (int i = 0; i < ints.length; i++) {
-						int inti = 10 - random.nextInt(20);
-						ints[i++] = inti;
-					}
-				} else {
-					for (int i = 0; i < ints.length; i++) {
-						int inti = 2 - random.nextInt(5);
-						ints[i] = ints[i++] + inti;
-					}
-
+				scope.setValue(channel, value);
+				value += add;
+				if (value > 60 || value < -60) {
+					add *= -1;
 				}
-
-				scope.setValues(0, ints);
 			}
 		});
 
 		scope.getDispatcher(0).dispatch();
-
 	}
 }
